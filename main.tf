@@ -19,7 +19,5 @@ module "vm" {
   location            = var.location
   vnet1_id            = module.vnet.vnet1_id
   vnet2_id            = module.vnet.vnet2_id
-  network_interface_id_1 = module.vnet.network_interface_id_1.id
-  network_interface_id_2 = module.vnet.network_interface_id_2.id
 }
 
