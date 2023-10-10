@@ -21,3 +21,13 @@ variable "gateway_subnet_prefix_vnet2" {
   type        = string
   default     = "10.2.255.0/27"
 }
+
+variable "resource_group_name" {
+  description = "Nom du groupe de ressources"
+  type        = string
+}
+
+variable "location" {
+  description = "Localisation Azure pour les ressources"
+  type        = string
+}

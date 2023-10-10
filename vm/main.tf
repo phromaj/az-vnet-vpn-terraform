@@ -1,37 +1,66 @@
-resource "azurerm_virtual_machine" "vm1" {
-  name                  = "myVM1"
-  location              = var.location
-  resource_group_name   = var.resource_group_name
-  vm_size               = "Standard_D1_v2"
 
-  storage_os_disk {
-    name              = "myOsDisk1"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Premium_LRS"
+resource "azurerm_linux_virtual_machine" "vm1" {
+  name                = "VM1"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  size                = "Standard_D2s_v3"
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
   }
 
-  os_profile {
-    computer_name  = "hostName1"
-    admin_username = "testadmin"
-    admin_password = "Password123!"
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-
-  network_interface_ids = [var.network_interface_id_1]
-
-  storage_image_reference {
+  source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
+    sku       = "22.04-LTS"
     version   = "latest"
   }
+
+  computer_name  = "vm1"
+  admin_username = "azureuser"
+  disable_password_authentication = true
+
+  admin_ssh_key {
+    username   = "azureuser"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  network_interface_ids = [
+    # Assuming you have a network interface created, add the ID here.
+  ]
+
 }
 
-resource "azurerm_virtual_machine" "vm2" {
-  # ... (same as vm1, but adjust names, and use network_interface_id_2)
-}
+resource "azurerm_linux_virtual_machine" "vm2" {
+  name                = "VM2"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  size                = "Standard_D2s_v3"
 
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "22.04-LTS"
+    version   = "latest"
+  }
+
+  computer_name  = "vm2"
+  admin_username = "azureuser"
+  disable_password_authentication = true
+
+  admin_ssh_key {
+    username   = "azureuser"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  network_interface_ids = [
+    # Assuming you have a network interface created, add the ID here.
+  ]
+
+}
