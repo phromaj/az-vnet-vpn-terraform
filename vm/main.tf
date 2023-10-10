@@ -1,3 +1,41 @@
+resource "azurerm_subnet" "vnet1_vm_subnet" {
+  name                 = "VmSubnet"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = var.vnet1_id
+  address_prefixes     = ["10.1.1.0/24"]
+}
+
+resource "azurerm_network_interface" "vm1_nic" {
+  name                = "vm1-nic"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.vnet1_vm_subnet.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+resource "azurerm_subnet" "vnet2_vm_subnet" {
+  name                 = "VmSubnet"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = var.vnet2_id
+  address_prefixes     = ["10.2.1.0/24"]
+}
+
+resource "azurerm_network_interface" "vm2_nic" {
+  name                = "vm2-nic"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.vnet2_vm_subnet.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
 
 resource "azurerm_linux_virtual_machine" "vm1" {
   name                = "VM1"
@@ -26,8 +64,8 @@ resource "azurerm_linux_virtual_machine" "vm1" {
     public_key = file("~/.ssh/id_rsa.pub")
   }
 
-  network_interface_ids = [
-    # Assuming you have a network interface created, add the ID here.
+  network_interface_ids = [ 
+    azurerm_network_interface.vm1_nic.id  
   ]
 
 }
@@ -60,7 +98,7 @@ resource "azurerm_linux_virtual_machine" "vm2" {
   }
 
   network_interface_ids = [
-    # Assuming you have a network interface created, add the ID here.
+    azurerm_network_interface.vm2_nic.id
   ]
 
 }
