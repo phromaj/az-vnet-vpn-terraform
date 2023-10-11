@@ -2,6 +2,8 @@
 
 This repository provides Terraform configurations to automate the creation of Azure Virtual Networks, establish VPN connections, and deploy VMs into these networks.
 
+![Azure Architecture Diagram](https://showme.redstarplugin.com/d/d:MjUu7cjN)
+
 ## Features:
 
 - Automated VNet creation in Azure.
@@ -18,8 +20,8 @@ This repository provides Terraform configurations to automate the creation of Az
 
 1. **Clone the Repository:**
     ```bash
-    git clone https://github.com/[YOUR_USERNAME]/[YOUR_REPO_NAME].git
-    cd [YOUR_REPO_NAME]
+    git clone https://github.com/phromaj/az-vnet-vpn-terraform.git
+    cd az-vnet-vpn-terraform
     ```
 
 2. **Login to Azure:**
@@ -37,8 +39,6 @@ This repository provides Terraform configurations to automate the creation of Az
     terraform apply
     ```
 
-Note: Replace `[YOUR_USERNAME]` and `[YOUR_REPO_NAME]` with appropriate values.
-
 ## Customization:
 
 You can customize the Terraform variables as per your requirements in the provided configurations.
@@ -50,3 +50,5 @@ To destroy the created resources:
 ```bash
 terraform destroy
 ```
+
+**Note:** There is an AZ CLI script version available in this repository named `azure_vm_vpn_setup.sh`.

@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
+}
+    
 provider "azurerm" {
   features {}
 }
@@ -20,4 +29,3 @@ module "vm" {
   vnet1_id            = module.vnet.vnet1_id
   vnet2_id            = module.vnet.vnet2_id
 }
-
